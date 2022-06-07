@@ -6,8 +6,19 @@
   </p>
 </div>
 
-<button class=" btn btn-primary btn-todo shadow m-1" (click)="showForm = !showForm;"  *ngIf="showForm == false"><i class="fa fa-plus"></i> Tarea</button>
-<button class=" btn btn-primary btn-todo shadow m-1" routerLink="/categorias" > Administrar Categorias</button>
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+  <button class=" btn btn-primary btn-todo shadow m-1" (click)="showForm = !showForm;"  *ngIf="showForm == false"><i class="fa fa-plus"></i> Tarea</button>
+  <button class=" btn btn-primary btn-todo shadow m-1" routerLink="/categorias" > Administrar Categorias</button>
+</div>
+
+<div>
+  <h4>Filtrar por</h4>
+  <button type="button" class="btn" [ngClass]="{'btn-outline-info': catId != -1, 'btn-primary': catId == -1}" (click)="catId = -1; getAll(-1)">Todos</button>
+  <button type="button" class="btn" [ngClass]="{'btn-outline-info': catId != lcat.id, 'btn-primary': catId == lcat.id}" (click)="catId = (lcat.id || -1); getAll(lcat.id)" *ngFor="let lcat of lCategories">{{lcat.name}}</button>
+
+
+</div>
+
 
 <div class="row" [ngClass]="{'d-none': showForm == false}">
   <div class=" col-md-12">
