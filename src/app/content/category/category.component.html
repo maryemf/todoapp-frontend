@@ -1,0 +1,60 @@
+<div class="row justify-content-center m-3">
+  <div class="col-md-4 text-center"></div>
+  <h1>Categorías</h1>
+  <p class=" text-info">
+    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+  </p>
+</div>
+
+<button class=" btn btn-primary btn-todo shadow m-1" (click)="showForm = !showForm"  *ngIf="showForm == false"><i class="fa fa-plus"></i> Categoría</button>
+<button class=" btn btn-primary btn-todo shadow m-1" routerLink="/tareas" > Administrar Tareas</button>
+
+
+<div class="row mt-3" *ngIf="showForm">
+  <div class=" col-md-12">
+    <form #f="ngForm" (ngSubmit)="f.valid && onSubmit(f)">
+      <div class="row">
+        <div class=" col-md-5 mb-3">
+          <label for="name" class="form-label">Categoría *</label>
+          <input type="text" name="name" id="name" placeholder="Categoria" class="form-control shadow" [(ngModel)]="category.name" #name="ngModel" required maxlength="50" [ngClass]="{'border-danger': f.submitted && name.invalid}">
+          <small class="form-errors" *ngIf="f.submitted && name.invalid">Requerido</small>
+        </div>
+        <div class=" col-md-5 mb-3">
+          <label for="description" class="form-label">Descripción</label>
+          <textarea name="description" id="description" cols="30" rows="2" class="form-control shadow" [(ngModel)]="category.description" #description="ngModel" maxlength="255" ></textarea>
+        </div>
+        <div class=" col-md-2 mb-3">
+          <div class="d-grid gap-2 mt-3">
+            <button type="submit" class=" btn btn-primary btn-todo shadow">{{ dataStatus[action] }}</button>
+            <button type="button" class=" btn btn-primary btn-todo shadow" (click)="showForm = false;" >Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="row categories-list">
+  <div class="col-md-3 mx-auto" *ngFor="let item of categories; let idx = index;">
+    <div class="card shadow" [style.border-left-color]="item.color">
+      <div class="card-body">
+        <div class="clearfix">
+          <div class="float-start">
+            <div class="badge bg-primary">CATEGORÍA</div>
+          </div>
+          <div class="float-end tools">
+            <small (click)="onEdit(item, idx)"><i class="fa fa-pencil text-success"></i></small>
+            <small (click)="onDelete(item.id, idx)"><i class="fa fa-trash text-danger"></i></small>
+          </div>
+        </div>
+        <div class="todo-content" routerLink="/tareas/{{item.id}}" >
+          <h3 [style.color]="item.color">{{item.name}}</h3>
+          <small class=" text-secondary">
+            {{item.description}}
+          </small>
+        </div>
+        <span class=" badge bg-danger">{{item.tasks?.length}} {{item.tasks && item.tasks.length > 1 ? 'tareas' : 'tarea'}}</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,131 @@
-/* You can add global styles to this file, and also import other style files */
+.shadow {
+  -webkit-box-shadow: 0px 0px 33px -10px rgba(71,114,254,0.3);
+  -moz-box-shadow: 0px 0px 33px -10px rgba(71,114,254,0.3);
+  box-shadow: 0px 0px 33px -10px rgba(71,114,254,0.3);
+}
+
+header {
+  height: 100px;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  margin-bottom: 50px;
+}
+
+.brand {
+  background-color: #f3f6ff;
+  padding: 10px 50px;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+footer {
+  height: 100px;
+  position:fixed;
+  bottom:0;
+  left: 0;
+  width:100%;
+  padding-top: 30px;
+  padding-bottom: 20px;
+}
+
+.app {
+  min-height: 100%;
+}
+
+input[type = text]{
+  background-color: #fefefe;
+  padding-left: 20px;
+}
+
+.btn-todo {
+  background-color: #e9eeff;
+  color: #4772ef;
+  border: none !important;
+}
+
+.card {
+  border: none;
+  border-left: 5px solid #000;
+  margin-top: 50px;
+}
+
+.bg-primary {
+  background-color: #e9eeff !important;
+  color: #4772fe !important;
+  margin-bottom: 20px;
+}
+
+.bg-danger {
+  background-color: #fef0f0 !important;
+  color: #f04141 !important;
+  margin-top: 50px;
+}
+
+.tools {
+  display: none;
+}
+
+.tools i {
+  margin: 0px 5px;
+  cursor: pointer;
+}
+
+.categories-list .card:hover{
+  cursor: pointer;
+  background-color: #f8f8f8;
+}
+
+.categories-list .card:hover .tools{
+  display: inline;
+}
+
+.todo-list{
+  margin-top: 50px;
+}
+
+.todo-list .card {
+  border: none;
+  margin-top: 5px;
+  background-color: #f8f8f8;
+}
+
+.todo-list .card:hover{
+  cursor: pointer;
+  width: 600px;
+  height: 100px;
+  margin-left: -30px;
+  border-top-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+
+.todo-list .card:hover .tools{
+  display: inline;
+}
+
+.todo-list i {
+  margin-right: 20px;
+}
+
+.border-danger{
+  border: 1px solid red !important;
+}
+
+.form-errors {
+  color: red !important;
+}
+
+.todo-list hr {
+  display: block;
+  margin-top: -10px;
+  margin-left: 30px;
+  margin-right: auto;
+  border-style: inset;
+  border-width: 1px;
+  background-color: #000;
+}
+
+.todo-list .data-small {
+  margin-left: 15px;
+}
+
+

@@ -1,0 +1,120 @@
+<div class="row m-3 ">
+  <div class="col-md-4 mx-auto"></div>
+  <h1>Tareas</h1>
+  <p class=" text-info">
+    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+  </p>
+</div>
+
+<button class=" btn btn-primary btn-todo shadow m-1" (click)="showForm = !showForm;"  *ngIf="showForm == false"><i class="fa fa-plus"></i> Tarea</button>
+<button class=" btn btn-primary btn-todo shadow m-1" routerLink="/categorias" > Administrar Categorias</button>
+
+<div class="row" [ngClass]="{'d-none': showForm == false}">
+  <div class=" col-md-12">
+    <form #f="ngForm" (ngSubmit)="f.valid && onSubmit(f)">
+      <div class="row">
+        <div class=" col-md-6 mb-3">
+          <label for="name" class="form-label">Tarea *</label>
+          <input type="text" name="name" id="name" placeholder="Tarea" class="form-control shadow" [(ngModel)]="task.name" #name="ngModel" required maxlength="50" [ngClass]="{'border-danger': f.submitted && name.invalid}">
+          <small class="form-errors" *ngIf="f.submitted && name.invalid">Requerido</small>
+        </div>
+        <div class=" col-md-6 mb-3">
+          <label for="description" class="form-label">Descripción</label>
+          <textarea name="description" id="description" cols="30" rows="1" class="form-control shadow" [(ngModel)]="task.description" #description="ngModel" maxlength="255" ></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="start_date" class="form-label">Fecha inicio</label>
+          <div class="input-group">
+            <input class="form-control" placeholder="yyyy-mm-dd"
+                  name="start_date" id="start_date" ngbDatepicker #d_start="ngbDatepicker" [(ngModel)]="model_start" #start_date="ngModel">
+            <button class="btn btn-outline-secondary calendar" (click)="d_start.toggle()" type="button">
+              <i class="fa fa-calendar"></i>
+            </button>
+          </div>
+          <small class="form-errors" *ngIf="f.submitted && start_date.invalid">Fecha invalida</small>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="end_date" class="form-label">Fecha Fin</label>
+          <div class="input-group">
+            <input class="form-control" placeholder="yyyy-mm-dd"
+                  name="end_date" id="end_date" ngbDatepicker #d_end="ngbDatepicker" [(ngModel)]="model_end" #end_date="ngModel" [isLessThanStartDate]="start_date.value">
+            <button class="btn btn-outline-secondary calendar" (click)="d_end.toggle()" type="button">
+              <i class="fa fa-calendar"></i>
+            </button>
+          </div>
+          <small class="form-errors" *ngIf="f.submitted && end_date.hasError('ngbDate')">Fecha inválida</small>
+          <small class="form-errors" *ngIf="f.submitted && end_date.hasError('isMoreThanStartDate')">La fecha fin debe ser mayor que la fecha inicio</small>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 mb-3">
+          <label class="form-label">Categorías *</label>
+          <input type="hidden" name="categories" id="categories" class="form-control" [(ngModel)]="task.categories" #categories="ngModel" required>
+
+          <div>
+            <div class="form-check form-check-inline" *ngFor="let cat of lCategories; let i = index;">
+              <input class="form-check-input" type="checkbox" id="cat-check{{cat.id}}" [value]="cat.id" [checked]="(task.categories && task.categories.indexOf(cat.id) > - 1)" [ngClass]="{'border-danger': f.submitted && categories.invalid}" (click)="processChecks()">
+              <label class="form-check-label" for="cat-check{{cat.id}}">{{cat.name}}</label>
+            </div>
+          </div>
+          <small class="form-errors" *ngIf="f.submitted && categories.invalid">Requerido</small>
+        </div>
+      </div>
+      <div class="row">
+        <div class="d-grid gap-2 mt-5 col-md-6">
+          <button type="submit" class=" btn btn-primary btn-todo shadow">{{ dataStatus[action] }}</button>
+        </div>
+        <div class="d-grid gap-2 mt-5 col-md-6">
+          <button type="button" class=" btn btn-primary btn-todo shadow" (click)="showForm = false;">Cancelar</button>
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+<div class="row todo-list">
+  <div *ngFor="let item of tasks; let idx = index;">
+    <div class="col-md-6 mx-auto" *ngIf="catId > 0 && (item.categories && item.categories.length > 0) || catId == -1" >
+      <div class="card" >
+        <div class="card-body">
+          <div class="clearfix">
+           <div class="float-start text-secondary">
+             <i class="far fa-circle text-danger" (click)="onCompleted(item, idx, true)" *ngIf="!item.is_complete"></i>
+             <i class="fas fa-check text-success" (click)="onCompleted(item, idx, false)" *ngIf="item.is_complete"></i>
+             {{item.name}}
+             <hr *ngIf="item.is_complete">
+             <div>
+              <small class="badge" [style.background-color]="cat.color" *ngFor="let cat of item.categories">{{cat.name}}</small>
+              <p *ngIf="!item.is_complete">
+                <small class="data-small" *ngIf="item.start_date">Inicio: {{item.start_date | date:'Y-MM-dd'}}</small>
+                <small class="data-small" *ngIf="item.end_date">Fin: {{item.end_date | date:'Y-MM-dd'}}</small>
+              </p>
+              <p *ngIf="item.is_complete">
+                <small class="data-small" >Finalizada: {{item.completed_date | date:'Y-MM-dd'}}</small>
+              </p>
+             </div>
+
+           </div>
+           <div class="float-end">
+             <i class="far fa-check-circle text-success" (click)="onCompleted(item, idx, true)" *ngIf="!item.is_complete" ></i>
+             <i class="far fa-times-circle text-danger" (click)="onCompleted(item, idx, false)" *ngIf="item.is_complete"></i>
+             <div class="tools">
+               <small>
+                  <i class="fas fa-pencil text-warning" (click)="onEdit(item, idx)"></i>
+                  <i class="fas fa-trash text-danger" (click)="onDelete(item.id, idx)"></i>
+               </small>
+             </div>
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
