@@ -41,8 +41,6 @@ export class TaskComponent implements OnInit {
       if (p.id){
         this.catId = p.id;
         this.getAll(p.id);
-        // mark category in form
-        this.task.categories?.push(p.id);
       } else {
         this.getAll();
         this.model_start = this.calendar.getToday();
