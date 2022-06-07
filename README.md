@@ -15,4 +15,4 @@ npm install
 ```
 5. Navegar a  `http://localhost:4200/`
 
-![TodoApp](/assets/images/electrocat.png)
+![TodoApp](/assets/images/todoapp.png)
