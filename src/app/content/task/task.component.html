@@ -1,7 +1,7 @@
 <div class="row m-3 ">
   <div class="col-md-4 mx-auto"></div>
-  <h1>Tareas</h1>
-  <p class=" text-info">
+  <h1>Tareas <i class="fa fa-info-circle fs-5" (click)="showInfo = !showInfo"></i></h1>
+  <p class=" text-info" *ngIf="showInfo">
     Para crear: + Tarea<br>
     Para crear nuevas categorias: Administrar Categorias<br>
     Para Filtrar: Boton con la categoría<br>
@@ -19,11 +19,15 @@
 
 <div>
   <h4>Filtrar por</h4>
-  <button type="button" class="btn" [ngClass]="{'btn-outline-info': catId != -1, 'btn-primary': catId == -1}" (click)="catId = -1; getAll(-1)">Todos</button>
+  <button type="button" class="btn" [ngClass]="{'btn-outline-info': catId != -1, 'btn-primary': catId == -1}" (click)="catId = -1; getAll(-1)">Todas</button>
   <button type="button" class="btn" [ngClass]="{'btn-outline-info': catId != lcat.id, 'btn-primary': catId == lcat.id}" (click)="catId = (lcat.id || -1); getAll(lcat.id)" *ngFor="let lcat of lCategories">{{lcat.name}}</button>
-
-
 </div>
+<!-- <div>
+  <h4>Mostrar</h4>
+  <button type="button" class="btn" [ngClass]="{'btn-outline-info': filter != undefined, 'btn-primary': filter == undefined}" (click)="filter = undefined; getAll(-1)">Todas</button>
+  <button type="button" class="btn" [ngClass]="{'btn-outline-info': filter == false, 'btn-primary': filter == true}" (click)="filter = 1; filterTasks(1)">Completadas</button>
+  <button type="button" class="btn" [ngClass]="{'btn-outline-info': filter == true, 'btn-primary': filter == false}" (click)="filter = 0; filterTasks(0)">No Completadas</button>
+</div> -->
 
 
 <div class="row" [ngClass]="{'d-none': showForm == false}">
@@ -117,8 +121,8 @@
 
            </div>
            <div class="float-end">
-             <i class="far fa-check-circle text-success" (click)="onCompleted(item, idx, true)" *ngIf="!item.is_complete" ></i>
-             <i class="far fa-times-circle text-danger" (click)="onCompleted(item, idx, false)" *ngIf="item.is_complete"></i>
+             <i class="far fa-check-circle text-success" (click)="onCompleted(item, idx, true)" *ngIf="!item.is_complete" title="Marcar como completada" ></i>
+             <i class="far fa-times-circle text-danger" (click)="onCompleted(item, idx, false)" *ngIf="item.is_complete" title="Marcar como no completada"></i>
              <div class="tools">
                <small>
                   <i class="fas fa-pencil text-warning" (click)="onEdit(item, idx)"></i>

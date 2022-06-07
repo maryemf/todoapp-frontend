@@ -19,6 +19,7 @@ export class CategoryComponent implements OnInit {
   dataStatus: any = {'add': 'Añadir', 'edit': 'Actualizar'};
   action: string = 'add';
   showForm: boolean = false;
+  showInfo: boolean = false;
 
   constructor(private categoryService: CategoryService, private toastr: ToastrService) { }
 

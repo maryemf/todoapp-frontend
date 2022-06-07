@@ -30,6 +30,8 @@ export class TaskComponent implements OnInit {
   dataStatus: any = {'add': 'Añadir', 'edit': 'Actualizar'};
   action: string = 'add';
   showForm: boolean = false;
+  showInfo: boolean = false;
+  filter: number = -1;
 
   constructor(private calendar: NgbCalendar, private taskService: TaskService,
               private categoryService: CategoryService, private toastr: ToastrService,
@@ -62,6 +64,10 @@ export class TaskComponent implements OnInit {
       this.lCategories = res.data;
     });
   }
+
+  // filterTasks(complete: number): void{
+  //   this.tasks = this.tasks.filter(task => task.is_complete == complete);
+  // }
 
   onSubmit(f: NgForm): void {
     console.log(f.value);
@@ -128,6 +134,7 @@ export class TaskComponent implements OnInit {
 
     this.task.is_complete = completed;
 
+
   }
 
   onEdit(item: Task, idx: number): void {
@@ -168,7 +175,13 @@ export class TaskComponent implements OnInit {
   onCompleted(item: Task, idx: number, completed: boolean): void {
     this.idx = idx;
     this.setTaskData(item, completed);
-    this.updateTask(this.task, null);
+    const data: any = Object.assign({}, this.task);
+    if (completed){
+      data.completed_date = moment().format('YYYY-MM-DD HH:mm:ss');
+    } else {
+      data.completed_date = undefined;
+    }
+    this.updateTask(data, null);
   }
 
   processChecks(): void {

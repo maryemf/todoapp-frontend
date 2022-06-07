@@ -79,6 +79,10 @@ input[type = text]{
   display: inline;
 }
 
+.categories-list i {
+  cursor: pointer;
+}
+
 .todo-list{
   margin-top: 50px;
 }
@@ -89,9 +93,9 @@ input[type = text]{
   background-color: #f8f8f8;
 }
 
-.todo-list .card:hover{
+.todo-list .card:hover {
   cursor: pointer;
-  width: 600px;
+  width: 700px;
   height: 100px;
   margin-left: -30px;
   border-top-left-radius: 30px;
@@ -126,6 +130,10 @@ input[type = text]{
 
 .todo-list .data-small {
   margin-left: 15px;
+}
+
+h1 i {
+  cursor: pointer;
 }
 
 
